@@ -1,0 +1,395 @@
+/**
+ * Canonical Data Layer for Abdulmohsen Ali AlQarni's Portfolio
+ * Single source of truth with 100% parity with thesis data and verified certificates.
+ */
+
+export interface Metric {
+  label_en: string;
+  label_ar: string;
+  value: string;
+  sub_en: string;
+  sub_ar: string;
+}
+
+export interface Project {
+  id: string;
+  tag: string;
+  title_en: string;
+  title_ar: string;
+  attribution_en: string;
+  attribution_ar: string;
+  problem_en: string;
+  solution_en: string;
+  architecture_en?: string;
+  ranking_formula_en?: string;
+  key_metrics: Metric[];
+  stack: string[];
+}
+
+export interface SkillCategory {
+  category_en: string;
+  category_ar: string;
+  skills: { name: string; evidence: string }[];
+}
+
+export interface Certification {
+  title_en: string;
+  title_ar: string;
+  issuer_en: string;
+  issuer_ar: string;
+  date: string;
+  valid_until?: string;
+  duration_hours?: number;
+  program_en?: string;
+  program_ar?: string;
+  status_note: string;
+  category: string;
+}
+
+export interface ExperienceUnit {
+  unit_en: string;
+  unit_ar: string;
+  achievements_en: string[];
+}
+
+export interface Experience {
+  company_en: string;
+  company_ar: string;
+  department_en: string;
+  department_ar: string;
+  role_en: string;
+  role_ar: string;
+  period: string;
+  duration_en: string;
+  duration_ar: string;
+  units: ExperienceUnit[];
+}
+
+export const PORTFOLIO_DATA = {
+  profile: {
+    name_en: "Abdulmohsen Ali AlQarni",
+    name_ar: "عبدالمحسن علي القرني",
+    title_en: "Full-Stack Software Engineer & Cloud Solutions Architect",
+    title_ar: "مهندس برمجيات وحلول سحابية",
+    location_en: "Saudi Arabia",
+    location_ar: "المملكة العربية السعودية",
+    email: "a.m.qarni@outlook.com",
+    linkedin: "https://www.linkedin.com/in/abdulmohsen-aiqarni-346369390",
+    bio_summary_en:
+      "Computer Science graduate from Bisha University with a dedicated focus on cloud-native application architectures, relational database engineering, and intelligent information retrieval pipelines. Combines 6 months of enterprise software development experience at the Saudi Patient Safety Center with industry credentials from Alibaba Cloud, Oracle, and SDAIA.",
+    bio_summary_ar:
+      "خريج علوم حاسب من جامعة بيشة متخصص في البنى السحابية وتطوير الأنظمة وقواعد البيانات وتطبيقات استرجاع البيانات الذكية. يجمع بين الخبرة العملية الميدانية في المركز السعودي لسلامة المرضى والاعتمادات المهنية من علي بابا كلاود وأوراكل وسدايا."
+  },
+  education: {
+    degree_en: "Bachelor of Science in Computer Science",
+    degree_ar: "بكالوريوس في علوم الحاسب",
+    institution_en: "Bisha University",
+    institution_ar: "جامعة بيشة",
+    college_en: "College of Computers Science",
+    college_ar: "كلية علوم الحاسب",
+    period: "2022 – 2026",
+    status_en: "Graduated",
+    status_ar: "متخرج"
+  },
+  experience: [
+    {
+      company_en: "Saudi Patient Safety Center (SPSC)",
+      company_ar: "المركز السعودي لسلامة المرضى",
+      department_en: "Information Technology Department",
+      department_ar: "إدارة تقنية المعلومات",
+      role_en: "Information Technology Intern",
+      role_ar: "متدرب تقنية معلومات",
+      period: "January 2026 – July 2026",
+      duration_en: "6 Months (Full-Time)",
+      duration_ar: "6 أشهر (دوام كامل)",
+      units: [
+        {
+          unit_en: "Application Full-Stack Development Unit",
+          unit_ar: "وحدة تطوير التطبيقات والحلول الرقمية",
+          achievements_en: [
+            "Assisted in developing web pages using HTML, CSS, JavaScript, and Bootstrap.",
+            "Participated in implementing core application features using ASP.NET Core MVC.",
+            "Worked with the development team to test, debug, and improve application responsiveness and stability."
+          ]
+        },
+        {
+          unit_en: "Data Management & Database Unit",
+          unit_ar: "وحدة إدارة البيانات وقواعد البيانات",
+          achievements_en: [
+            "Assisted in managing and updating enterprise relational SQL databases.",
+            "Performed structured SQL queries for transactional data retrieval, validation, and schema updates.",
+            "Supported the engineering team with scheduled database tasks, integrity routines, and data extraction."
+          ]
+        },
+        {
+          unit_en: "Service Desk & Technical Support Unit",
+          unit_ar: "وحدة الدعم الفني وخدمات المستفيدين",
+          achievements_en: [
+            "Received calls and inquiries from end users regarding technical operational issues, providing first-level support.",
+            "Collaborated on ticket classification, resolution documentation, and escalation to second-level engineering teams."
+          ]
+        }
+      ]
+    }
+  ] as Experience[],
+  certifications: [
+    {
+      title_en: "Cloud Computing Engineer",
+      title_ar: "مهندس الحوسبة السحابية",
+      issuer_en: "Alibaba Cloud × Tuwaiq Academy",
+      issuer_ar: "علي بابا كلاود × أكاديمية طويق",
+      date: "January 2026",
+      valid_until: "January 30, 2028",
+      status_note: "Verification available on request",
+      category: "Cloud Architecture"
+    },
+    {
+      title_en: "Oracle Database SQL Specialist",
+      title_ar: "أساسيات ومفاهيم إدارة قواعد البيانات Oracle SQL",
+      issuer_en: "Abad Network for Training (TVTC Accredited)",
+      issuer_ar: "معهد شبكة أباد للتدريب (معتمد من المؤسسة العامة للتدريب التقني والمهني)",
+      date: "May 2026",
+      duration_hours: 60,
+      status_note: "Verification available on request",
+      category: "Database Engineering"
+    },
+    {
+      title_en: "Artificial Intelligence Concepts and Advanced Applications",
+      title_ar: "مفاهيم الذكاء الاصطناعي وتطبيقاته المتقدمة",
+      issuer_en: "Saudi Data and AI Authority (SDAIA)",
+      issuer_ar: "الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",
+      program_en: "SDAIA Initiative for One Million Saudis into AI (SAMAI)",
+      program_ar: "ضمن مبادرة مليون سعودي للذكاء الاصطناعي (سماي)",
+      date: "September 15, 2025",
+      status_note: "Verification available on request",
+      category: "Artificial Intelligence"
+    },
+    {
+      title_en: "Fundamentals of Artificial Intelligence",
+      title_ar: "مبادئ الذكاء الاصطناعي",
+      issuer_en: "Saudi Data and AI Authority (SDAIA)",
+      issuer_ar: "الهيئة السعودية للبيانات والذكاء الاصطناعي (سدايا)",
+      program_en: "SDAIA Initiative for One Million Saudis into AI (SAMAI)",
+      program_ar: "ضمن مبادرة مليون سعودي للذكاء الاصطناعي (سماي)",
+      date: "September 13, 2025",
+      status_note: "Verification available on request",
+      category: "Artificial Intelligence"
+    }
+  ] as Certification[],
+  skills: [
+    {
+      category_en: "Cloud & Infrastructure",
+      category_ar: "الحوسبة السحابية والبنية التحتية",
+      skills: [
+        { name: "Alibaba Cloud ECS/VPC/SLB", evidence: "Certified (Tuwaiq Academy)" },
+        { name: "Cloud Infrastructure Solutions", evidence: "Certified & Applied" },
+        { name: "Server Deployment & Hosting (Ubuntu/Windows)", evidence: "Capstone Production Setup" },
+        { name: "IT Service Desk Tier-1 Operations", evidence: "SPSC Internship (6 mos)" }
+      ]
+    },
+    {
+      category_en: "Full-Stack Software Engineering",
+      category_ar: "تطوير البرمجيات وتطبيقات الويب",
+      skills: [
+        { name: "Python / Flask Micro-framework", evidence: "EduNexus Core Backend" },
+        { name: "ASP.NET Core MVC", evidence: "SPSC Enterprise Internship" },
+        { name: "JavaScript (ES6+) & Responsive DOM", evidence: "Production & Portfolio" },
+        { name: "HTML5 / CSS3 / Tailwind / Bootstrap", evidence: "Internship & Capstone" },
+        { name: "RESTful API Integration & Testing", evidence: "Production & Capstone" }
+      ]
+    },
+    {
+      category_en: "Database Engineering & Automation",
+      category_ar: "قواعد البيانات والأتمتة البرمجية",
+      skills: [
+        { name: "Oracle SQL Database Administration", evidence: "Certified 60-Hour TVTC Track" },
+        { name: "Relational Data Modeling & Normalization", evidence: "Oracle Certification & SPSC" },
+        { name: "Complex Query Execution & Optimization", evidence: "SPSC Data Management Unit" },
+        { name: "OpenPyXL / Pandas Reporting Automation", evidence: "Portfolio Benchmark Suite" },
+        { name: "SQLite & In-Memory Session Caching", evidence: "EduNexus Prototype" }
+      ]
+    },
+    {
+      category_en: "AI & Advanced Information Retrieval",
+      category_ar: "الذكاء الاصطناعي واسترجاع المعلومات",
+      skills: [
+        { name: "Heuristic Multi-Factor Ranking Logic", evidence: "EduNexus Algorithm Architecture" },
+        { name: "Academic API Federation (arXiv, Semantic Scholar)", evidence: "EduNexus Query Engine" },
+        { name: "XML / JSON Metadata Extraction", evidence: "EduNexus Data Pipeline" },
+        { name: "AI Concepts & Advanced Applications", evidence: "SDAIA Certified" }
+      ]
+    }
+  ] as SkillCategory[],
+  projects: [
+    {
+      id: "01",
+      tag: "FLAGSHIP 01",
+      title_en: "EduNexus: Intelligent Academic Search Engine & Verification Architecture",
+      title_ar: "منصة إيدونيكس: محرك بحث أكاديمي ذكي وموثق للمصادر التعليمية",
+      attribution_en:
+        "Bisha University Graduation Project · Contributed to full-stack implementation and API integration in the 7-person capstone team · Supervised by Dr. Ali Yasser Al-Qarni",
+      attribution_ar:
+        "مشروع تخرج جامعة بيشة · مساهم في التطوير المتكامل وربط واجهات برمجة التطبيقات ضمن فريق من 7 مهندسين · إشراف د. علي ياسر القرني",
+      problem_en:
+        "In the digital age, students and educators face significant obstacles locating credible academic resources due to the overwhelming volume of commercial content, clickbait, and paid advertisements returned by general-purpose search engines like Google and Bing.",
+      solution_en:
+        "Developed EduNexus, an intelligent academic browser that programmatically bypasses non-academic clutter by federating trusted academic sources (arXiv, Semantic Scholar, CrossRef) and open educational resource repositories (MIT OCW, OpenStax, OER Commons), applying an intelligent relevance-ranking algorithm and presenting an ad-free interface.",
+      architecture_en:
+        "Client-Server model: Python 3.9+ with Flask micro-framework managing HTTP request cycles, Requests with xml.etree.ElementTree for parsing XML payloads, built-in json serialization for Semantic Scholar and CrossRef, regex text preprocessing r'[^\\w\\s-]' for query sanitization, memoization query caching (30-min TTL), and a responsive web front-end.",
+      ranking_formula_en:
+        "Relevance Score = 0.40 × Keyword Match + 0.35 × Source Credibility + 0.15 × Content Freshness + 0.10 × Resource Type Score",
+      key_metrics: [
+        {
+          label_en: "Search Relevance Accuracy",
+          label_ar: "دقة مطابقة النتائج",
+          value: "87.0%",
+          sub_en: "Surpassing 80% baseline target",
+          sub_ar: "تجاوزت المستهدف 80%"
+        },
+        {
+          label_en: "Average Response Time",
+          label_ar: "متوسط سرعة الاستجابة",
+          value: "1.65s",
+          sub_en: "Sub-2.0 second benchmark",
+          sub_ar: "أقل من المستهدف 2.0 ثانية"
+        },
+        {
+          label_en: "System Usability Score",
+          label_ar: "مقياس سهولة الاستخدام SUS",
+          value: "81.5",
+          sub_en: "Rated 'Excellent' across 20 students",
+          sub_ar: "تقييم ممتاز لدى 20 طالباً"
+        },
+        {
+          label_en: "User Task Time Reduction",
+          label_ar: "اختصار وقت البحث للمستفيد",
+          value: "40%",
+          sub_en: "Faster research completion vs Google",
+          sub_ar: "أسرع بنسبة 40% مقارنة بقوقل"
+        }
+      ],
+      stack: ["Python 3.9+", "Flask REST", "Requests", "xml.etree.ElementTree", "JavaScript ES6+", "HTML5 / CSS3", "SQLite"]
+    },
+    {
+      id: "02",
+      tag: "ANALYTICS 02",
+      title_en: "EduNexus Evaluation Dashboard — Interactive analysis of search performance and usability results",
+      title_ar: "لوحة تقييم إيدونيكس — تحليل تفاعلي لأداء محرك البحث ونتائج سهولة الاستخدام",
+      attribution_en:
+        "Interactive evaluation suite and empirical benchmarking system across 50 academic research queries",
+      attribution_ar:
+        "نظام تقييم تجريبي وتحليلي قياسي لأداء محركات البحث عبر 50 استعلاماً بحثياً تخصصياً",
+      problem_en:
+        "Proving search engine effectiveness requires transparent empirical measurements of multi-source API latencies, citation coverage integrity, discipline-specific accuracy, and server resource consumption under concurrent load.",
+      solution_en:
+        "Engineered an interactive 3-stage analytics dashboard (Plan → Build → Evaluate) that simulates ranking formula weights, visualizes source latency waterfalls (arXiv, Semantic Scholar, CrossRef), and plots concurrent load scaling up to 20 simultaneous users.",
+      key_metrics: [
+        {
+          label_en: "API Success Rate",
+          label_ar: "معدل نجاح واجهات الربط",
+          value: "98.4%",
+          sub_en: "Reliable multi-source fetching",
+          sub_ar: "موثوقية الاتصال والاستجابة"
+        },
+        {
+          label_en: "Citation Coverage",
+          label_ar: "تغطية الاستشهادات المرجعية",
+          value: "92.0%",
+          sub_en: "Verified academic publications",
+          sub_ar: "استشهادات علمية موثقة"
+        },
+        {
+          label_en: "Precision@5 Benchmark",
+          label_ar: "دقة أعلى 5 نتائج",
+          value: "0.86",
+          sub_en: "High-relevance top results",
+          sub_ar: "دقة علمية فائقة"
+        },
+        {
+          label_en: "Concurrent Stress Capacity",
+          label_ar: "استقرار الأداء مع التزامن",
+          value: "20 Users",
+          sub_en: "Linear memory scaling",
+          sub_ar: "تدرج خطي للموارد"
+        }
+      ],
+      stack: ["Vanilla JavaScript", "SVG Charts", "Bilingual i18n", "State Machine Architecture", "CSS Custom Properties"]
+    },
+    {
+      id: "03",
+      tag: "AUTOMATION 03",
+      title_en: "Automated Benchmark Ledger & Multi-Sheet Excel Engine",
+      title_ar: "نظام الأتمتة البرمجية للمصنفات التحليلية ومؤشرات الأداء",
+      attribution_en:
+        "Procedural Python OpenPyXL & Pandas data engineering pipeline generating self-calculating workbooks",
+      attribution_ar:
+        "محرك أتمتة برمجية بلغة بايثون ومكتبات أوبن بايكسل لإنشاء تقارير ومصنفات تفاعلية ذاتية الحساب",
+      problem_en:
+        "Compiling multi-variable research benchmarks into manual spreadsheets causes broken lookups, calculation drift, and tedious repetitive reformatting across evaluation iterations.",
+      solution_en:
+        "Created an 18-section procedural Python script following the reference architecture that ingests 50-query benchmark logs, builds 7 dynamic hidden helper sheets, generates formula-driven KPI cards (INDEX/MATCH and SUMIFS), applies ColorScale conditional formatting, and generates native Bar and Line charts in an RTL-aware workbook.",
+      key_metrics: [
+        {
+          label_en: "Automated Worksheets",
+          label_ar: "أوراق العمل التلقائية",
+          value: "9 Sheets",
+          sub_en: "KPI, Timeline, Helpers, Master Data",
+          sub_ar: "لوحة رئيسية ومساعدات ومخرجات"
+        },
+        {
+          label_en: "Generation Speed",
+          label_ar: "زمن معالجة وتوليد الملف",
+          value: "< 1.5s",
+          sub_en: "Rapid automated compilation",
+          sub_ar: "توليد فوري للمصنف"
+        },
+        {
+          label_en: "Formula Integrity",
+          label_ar: "دقة الصيغ والمعادلات",
+          value: "100%",
+          sub_en: "Zero #REF! or #NAME? errors",
+          sub_ar: "خالٍ تماماً من أخطاء المراجع"
+        },
+        {
+          label_en: "Bi-directional RTL Support",
+          label_ar: "التوافق اللغوي لليمين واليسار",
+          value: "Native",
+          sub_en: "Configured right-to-left layout",
+          sub_ar: "تصميم متوافق مع نمط RTL"
+        }
+      ],
+      stack: ["Python 3", "OpenPyXL", "Pandas", "Dynamic INDEX/MATCH", "Excel SUMIFS Matrices"]
+    }
+  ] as Project[],
+  telemetry: {
+    component_latency: [
+      { component: "arXiv API Latency", component_ar: "واجهة أركايف arXiv", ms: 672, min_ms: 320, max_ms: 1520, std_ms: 298 },
+      { component: "Semantic Scholar Latency", component_ar: "واجهة سيمانتيك سكولار", ms: 584, min_ms: 210, max_ms: 1340, std_ms: 256 },
+      { component: "CrossRef API Latency", component_ar: "واجهة كروس ريف CrossRef", ms: 512, min_ms: 180, max_ms: 980, std_ms: 201 },
+      { component: "Local Result Processing", component_ar: "المعالجة المحلية والترتيب", ms: 74, min_ms: 32, max_ms: 156, std_ms: 28 }
+    ],
+    load_scaling: [
+      { users: 1, memory_mb: 287, cpu_pct: 23, latency_ms: 1842 },
+      { users: 5, memory_mb: 412, cpu_pct: 37, latency_ms: 2015 },
+      { users: 10, memory_mb: 587, cpu_pct: 52, latency_ms: 2340 },
+      { users: 20, memory_mb: 892, cpu_pct: 78, latency_ms: 3120 }
+    ],
+    expert_eval: [
+      { discipline: "Computer Science", discipline_ar: "علوم الحاسب", precision: 0.91, recall: 0.85, novelty: 0.78 },
+      { discipline: "Physics", discipline_ar: "الفيزياء", precision: 0.88, recall: 0.82, novelty: 0.72 },
+      { discipline: "Life Sciences", discipline_ar: "علوم الحياة والطب", precision: 0.83, recall: 0.79, novelty: 0.68 }
+    ],
+    engine_comparison: [
+      { metric: "Attention Query (Relevant)", edunexus: "6/8 (75%)", google: "7/10 (70%)", semantic: "5/8 (62%)", arxiv: "4/5 (80%)" },
+      { metric: "Recent Papers (< 2 yrs)", edunexus: "3", google: "4", semantic: "3", arxiv: "2" },
+      { metric: "High Citations (> 100)", edunexus: "4", google: "5", semantic: "4", arxiv: "1" },
+      { metric: "Advertisements / Distractions", edunexus: "Zero (0%)", google: "High (Sponsored)", semantic: "Minimal", arxiv: "None" },
+      { metric: "Commercial Affiliate Bias", edunexus: "Excluded", google: "Frequent", semantic: "Excluded", arxiv: "Excluded" }
+    ],
+    latency_comparison: [
+      { query_type: "Simple Single-Keyword Query", query_type_ar: "استعلام بسيط أحادي الكلمة", edunexus_ms: 1420, google_ms: 980, semantic_ms: 1120, arxiv_ms: 780 },
+      { query_type: "Complex Academic Topic Query", query_type_ar: "استعلام أكاديمي مركب", edunexus_ms: 1842, google_ms: 1250, semantic_ms: 1380, arxiv_ms: 920 },
+      { query_type: "Interdisciplinary Synthesis Query", query_type_ar: "استعلام تخصصي متداخل", edunexus_ms: 2105, google_ms: 1540, semantic_ms: 1620, arxiv_ms: 0 }
+    ]
+  }
+};

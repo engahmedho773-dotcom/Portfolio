@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #17365D;
+  --navy-dark: #0F243E;
+  --navy-light: #244A6B;
+  --sage: #2E7D72;
+  --sage-light: #E8EFED;
+  --bronze: #B47B4F;
+  --bronze-soft: #F4ECE4;
+  --paper: #FBF9F5;
+  --ivory: #F3F0E9;
+  --white: #FFFFFF;
+  --ink: #243746;
+  --ink-light: #4A5B69;
+  --muted: #6B7785;
+  --line: #DDD6CB;
+  --line-light: #ECE7DF;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-ar: "Tajawal", "Manrope", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, Menlo, monospace;
+  --radius-card: 22px;
+  --radius-inner: 18px;
+  --radius-btn: 10px;
+  --radius-tag: 999px;
+  --radius-sm: 8px;
+  --shadow-sm: 0 2px 8px rgba(23, 54, 93, 0.04);
+  --shadow-md: 0 8px 25px rgba(23, 54, 93, 0.06);
+  --shadow-lg: 0 20px 45px rgba(23, 54, 93, 0.10);
+  --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--ivory);
+  color: var(--ink);
+}
+
+body[dir="rtl"] {
+  font-family: var(--font-ar);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-ar {
+  font-family: var(--font-ar);
+}
+
+.card-paper {
+  background-color: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+
+.card-paper:hover {
+  border-color: #CAC1B4;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.kicker {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--bronze);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}

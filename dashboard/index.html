@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduNexus Evaluation Dashboard — Abdulmohsen Ali AlQarni</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #17365D;
+      --navy-dark: #0F243E;
+      --navy-light: #244A6B;
+      --sage: #2E7D72;
+      --sage-light: #E8EFED;
+      --bronze: #B47B4F;
+      --bronze-soft: #F4ECE4;
+      --paper: #FBF9F5;
+      --ivory: #F3F0E9;
+      --white: #FFFFFF;
+      --ink: #243746;
+      --muted: #6B7785;
+      --line: #DDD6CB;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Manrope', sans-serif;
+      --font-ar: 'Tajawal', sans-serif;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family: var(--font-sans); background: var(--ivory); color: var(--ink); line-height: 1.6; }
+    body[dir="rtl"] { font-family: var(--font-ar); text-align: right; }
+    header { background: var(--navy); color: white; padding: 16px 24px; border-bottom: 4px solid var(--bronze); display: flex; justify-content: space-between; align-items: center; }
+    h1 { font-family: var(--font-serif); font-size: 20px; }
+    body[dir="rtl"] h1 { font-family: var(--font-ar); }
+    .btn-toggle { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 14px; border-radius: 8px; font-weight: 700; cursor: pointer; }
+    .btn-toggle:hover { background: rgba(255,255,255,0.25); }
+    .stage-bar { background: var(--white); border-bottom: 1px solid var(--line); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .stage-switch { display: inline-flex; background: var(--ivory); padding: 4px; border-radius: 12px; border: 1px solid var(--line); }
+    .stage-btn { padding: 6px 18px; border-radius: 8px; font-weight: 700; font-size: 12px; border: none; background: transparent; cursor: pointer; color: var(--muted); }
+    .stage-btn.active { background: var(--navy); color: white; }
+    .container { max-width: 1180px; margin: 24px auto; padding: 0 20px; }
+    .card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 24px; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(23,54,93,0.04); }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 20px; }
+    .metric-box { background: white; border: 1px solid var(--line); border-radius: 12px; padding: 18px; text-align: left; }
+    body[dir="rtl"] .metric-box { text-align: right; }
+    .metric-num { font-family: var(--font-serif); font-size: 28px; font-weight: 700; color: var(--navy); }
+    .metric-num.sage { color: var(--sage); }
+    .metric-num.bronze { color: var(--bronze); }
+    .metric-lbl { font-size: 12px; font-weight: 700; color: var(--ink); margin-top: 4px; }
+    .metric-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; background: white; }
+    th, td { padding: 10px 14px; border: 1px solid var(--line); text-align: left; }
+    body[dir="rtl"] th, body[dir="rtl"] td { text-align: right; }
+    th { background: var(--navy); color: white; font-weight: 700; }
+    tr:nth-child(even) { background: var(--paper); }
+  </style>
+</head>
+<body dir="ltr">
+  <header>
+    <div>
+      <h1 id="title-text">EduNexus Evaluation Dashboard — Systems Benchmarking</h1>
+      <p style="font-size: 12px; opacity: 0.85;" id="sub-text">Empirical Analysis of Search Accuracy, Multi-Source Latency & Usability</p>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <a href="../#dashboard" class="btn-toggle" style="text-decoration: none;">Main Portfolio</a>
+      <button class="btn-toggle" onclick="toggleLanguage()" id="lang-btn">العربية</button>
+    </div>
+  </header>
+
+  <div class="stage-bar">
+    <div class="stage-switch">
+      <button class="stage-btn" onclick="setStage('plan')" id="btn-plan">Stage I: Plan</button>
+      <button class="stage-btn" onclick="setStage('build')" id="btn-build">Stage II: Build</button>
+      <button class="stage-btn active" onclick="setStage('evaluate')" id="btn-eval">Stage III: Evaluate</button>
+    </div>
+    <div style="font-size: 12px; color: var(--muted);">
+      <span>Queries: <strong style="color: var(--navy);">50</strong></span> · 
+      <span>Accuracy: <strong style="color: var(--sage);">87.0%</strong></span> · 
+      <span>Latency: <strong style="color: var(--navy);">1.65s</strong></span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="content-area"></div>
+  </div>
+
+  <script>
+    let currentLang = 'en';
+    let currentStage = 'evaluate';
+
+    const data = {
+      en: {
+        kpi1: { num: "87.0%", lbl: "Search Relevance Accuracy", sub: "Surpassing 80% baseline target" },
+        kpi2: { num: "1.65s", lbl: "Average Response Time", sub: "Sub-2.0s target across sources" },
+        kpi3: { num: "81.5", lbl: "SUS Usability Score", sub: "Rated 'Excellent' across 20 students" },
+        kpi4: { num: "40%", lbl: "Task Time Reduction", sub: "Faster completion vs. Google" }
+      },
+      ar: {
+        kpi1: { num: "87.0%", lbl: "دقة مطابقة النتائج الأكاديمية", sub: "تجاوز المستهدف الأساسي 80%" },
+        kpi2: { num: "1.65 ثانية", lbl: "متوسط سرعة الاستجابة", sub: "أقل من المستهدف 2.0 ثانية" },
+        kpi3: { num: "81.5", lbl: "مقياس سهولة الاستخدام SUS", sub: "تقييم ممتاز لدى 20 طالباً" },
+        kpi4: { num: "40%", lbl: "اختصار وقت البحث للمستفيد", sub: "أسرع بنسبة 40% مقارنة بقوقل" }
+      }
+    };
+
+    function renderStage() {
+      const isAr = currentLang === 'ar';
+      document.body.dir = isAr ? 'rtl' : 'ltr';
+      document.getElementById('lang-btn').textContent = isAr ? 'English' : 'العربية';
+      document.getElementById('title-text').textContent = isAr 
+        ? 'لوحة تقييم إيدونيكس — تحليل أداء المحرك الأكاديمي' 
+        : 'EduNexus Evaluation Dashboard — Systems Benchmarking';
+      document.getElementById('sub-text').textContent = isAr 
+        ? 'تحليل تجريبي للدقة وسرعة الاستجابة والموثوقية · جامعة بيشة' 
+        : 'Empirical Analysis of Search Accuracy, Multi-Source Latency & Usability';
+
+      const d = isAr ? data.ar : data.en;
+      const content = document.getElementById('content-area');
+
+      if (currentStage === 'evaluate') {
+        content.innerHTML = `
+          <div class="grid-4">
+            <div class="metric-box"><div class="metric-num sage">${d.kpi1.num}</div><div class="metric-lbl">${d.kpi1.lbl}</div><div class="metric-sub">${d.kpi1.sub}</div></div>
+            <div class="metric-box"><div class="metric-num">${d.kpi2.num}</div><div class="metric-lbl">${d.kpi2.lbl}</div><div class="metric-sub">${d.kpi2.sub}</div></div>
+            <div class="metric-box"><div class="metric-num sage">${d.kpi3.num}</div><div class="metric-lbl">${d.kpi3.lbl}</div><div class="metric-sub">${d.kpi3.sub}</div></div>
+            <div class="metric-box"><div class="metric-num bronze">${d.kpi4.num}</div><div class="metric-lbl">${d.kpi4.lbl}</div><div class="metric-sub">${d.kpi4.sub}</div></div>
+          </div>
+          <div class="card">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 12px; color: var(--navy);">${isAr ? 'مقارنة محركات البحث (استعلام: آليات الانتباه في التعلم العميق)' : 'Search Engine Comparison: "attention mechanisms in deep learning"'}</h3>
+            <table>
+              <thead><tr><th>Metric / System</th><th>EduNexus</th><th>Google Scholar</th><th>Semantic Scholar</th><th>arXiv</th></tr></thead>
+              <tbody>
+                <tr><td>Relevant Results</td><td><strong>6/8 (75%)</strong></td><td>7/10 (70%)</td><td>5/8 (62%)</td><td>4/5 (80%)</td></tr>
+                <tr><td>Recent Papers (&lt; 2 yrs)</td><td><strong>3</strong></td><td>4</td><td>3</td><td>2</td></tr>
+                <tr><td>High Citations (&gt; 100)</td><td><strong>4</strong></td><td>5</td><td>4</td><td>1</td></tr>
+                <tr><td>Advertisements & Commercial Bias</td><td><strong>Zero (0%)</strong></td><td>Promotional Ads Present</td><td>Minimal</td><td>None</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      } else if (currentStage === 'build') {
+        content.innerHTML = `
+          <div class="card">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 8px; color: var(--navy);">${isAr ? 'تحليل زمن استجابة واجهات الربط الأكاديمية (ملّي ثانية)' : 'Multi-Source API Latency Breakdown (ms)'}</h3>
+            <p style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">${isAr ? 'متوسط زمن الاستجابة الكلي: 1,842 ملّي ثانية' : 'Total Mean Query Latency: 1,842ms across distributed endpoints'}</p>
+            <table>
+              <thead><tr><th>Component</th><th>Average (ms)</th><th>Min (ms)</th><th>Max (ms)</th><th>Std Dev (ms)</th></tr></thead>
+              <tbody>
+                <tr><td>arXiv API Latency</td><td>672ms</td><td>320ms</td><td>1520ms</td><td>±298ms</td></tr>
+                <tr><td>Semantic Scholar Latency</td><td>584ms</td><td>210ms</td><td>1340ms</td><td>±256ms</td></tr>
+                <tr><td>CrossRef API Latency</td><td>512ms</td><td>180ms</td><td>980ms</td><td>±201ms</td></tr>
+                <tr><td>Local Processing & Deduplication</td><td>74ms</td><td>32ms</td><td>156ms</td><td>±28ms</td></tr>
+              </tbody>
+            </table>
+          </div>
+        `;
+      } else if (currentStage === 'plan') {
+        content.innerHTML = `
+          <div class="card">
+            <h3 style="font-family: var(--font-serif); margin-bottom: 8px; color: var(--navy);">${isAr ? 'معادلة الترتيب الأكاديمي المعتمدة في المشروع' : 'Grounded Heuristic Relevance Ranking Model'}</h3>
+            <p style="font-size: 13px; color: var(--ink); margin-bottom: 16px;"><code>Score = (0.40 × Keyword Match) + (0.35 × Source Authority) + (0.15 × Content Freshness) + (0.10 × Resource Type)</code></p>
+            <div class="grid-4">
+              <div class="metric-box"><div class="metric-num">40%</div><div class="metric-lbl">Keyword Relevance</div></div>
+              <div class="metric-box"><div class="metric-num sage">35%</div><div class="metric-lbl">Source Authority</div></div>
+              <div class="metric-box"><div class="metric-num bronze">15%</div><div class="metric-lbl">Content Freshness</div></div>
+              <div class="metric-box"><div class="metric-num">10%</div><div class="metric-lbl">Resource Type</div></div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    function setStage(stage) {
+      currentStage = stage;
+      document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + stage).classList.add('active');
+      renderStage();
+    }
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      renderStage();
+    }
+
+    renderStage();
+  </script>
+</body>
+</html>
